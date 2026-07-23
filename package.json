@@ -1,0 +1,22 @@
+{
+  "name": "shakewell",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Measure vibration frequency with your phone — accelerometer to seismograph, spectrum and RPM, in your browser. Nothing is uploaded.",
+  "license": "AGPL-3.0-or-later",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0",
+    "vitest": "^2.0.0",
+    "@types/node": "^22.0.0",
+    "jsdom": "^25.0.0"
+  }
+}

@@ -1,0 +1,16 @@
+Shakewell — third-party notices
+================================
+
+Shakewell ships NO third-party runtime components. The entire client bundle —
+the FFT and signal processing, the CSV parser, the accelerometer capture, the
+canvas rendering and the UI — is first-party code by Ben Richardson, licensed
+under the AGPL-3.0-or-later (see LICENSE and ADDITIONAL-TERMS.md in the source
+repository: https://github.com/ben-gy/shakewell).
+
+There is no runtime maths library, no charting library, no framework, and no
+vendored WebAssembly. A scan of the production build's source maps for
+"node_modules/" returns nothing.
+
+The build- and test-time toolchain (Vite, TypeScript, Vitest, jsdom and their
+dependencies) is not distributed with the site and remains under its own
+licence.
