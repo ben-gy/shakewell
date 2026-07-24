@@ -18,7 +18,6 @@ import {
   setModalOpenHook,
 } from './ui';
 import { mountEventDrawer, log } from './eventlog';
-import { mountFeedback } from './feedback';
 import {
   MotionCapture,
   SampleWindow,
@@ -526,7 +525,6 @@ setModalOpenHook((id) => log.system(`Opened “${id}”.`));
 // ── Boot ─────────────────────────────────────────────────────────────
 
 setState('idle');
-mountFeedback();
 log.system('Shakewell ready. Everything runs in your browser.', 'ok');
 if (!isMotionSupported()) {
   log.system('No motion sensor detected — the CSV drop zone is your path in.', 'info');
