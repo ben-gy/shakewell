@@ -39,6 +39,15 @@
   box-sizing: border-box;
 }
 
+/* The `hidden` attribute must always win, even over class display rules.
+   An author declaration like `.drawer{display:flex}` otherwise beats the UA
+   `[hidden]{display:none}` (author origin outranks UA regardless of
+   specificity), leaving overlays stuck visible and blocking taps. This is the
+   classic [hidden] trap — keep this rule. */
+[hidden] {
+  display: none !important;
+}
+
 html {
   -webkit-text-size-adjust: 100%;
 }
