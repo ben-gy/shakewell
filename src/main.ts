@@ -284,6 +284,23 @@ async function handleFile(file: File): Promise<void> {
   }
 }
 
+// Fetch the bundled demo recording and feed it through the SAME path a real
+// upload takes (handleFile → handleCsvText), so pressing "Try a sample" parses,
+// analyses and renders exactly as a dropped file would. The sample bakes in a
+// clear ~12 Hz (720 RPM) dominant vibration so the spectrum shows an obvious peak.
+async function loadSample(): Promise<void> {
+  try {
+    log.analyse('Loading a sample recording…');
+    const res = await fetch('samples/demo.csv');
+    if (!res.ok) throw new Error(`sample fetch ${res.status}`);
+    const blob = await res.blob();
+    await handleFile(new File([blob], 'demo.csv', { type: 'text/csv' }));
+  } catch (err) {
+    log.analyse(`Could not load the sample: ${(err as Error)?.message ?? err}`, 'err');
+    showToast('Could not load the sample.');
+  }
+}
+
 // ── Present a reading + wire exports ─────────────────────────────────
 
 function presentReading(res: AnalyseResponse, samples: Sample[]): void {
@@ -412,6 +429,13 @@ refs.dropZone.addEventListener('drop', (e) => {
   if (f) void handleFile(f);
 });
 
+// The pill sits inside the drop zone, so stop the click bubbling up and opening
+// the file picker as well.
+refs.sampleBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  void loadSample();
+});
+
 // Paste a CSV directly.
 document.addEventListener('paste', (e) => {
   const text = e.clipboardData?.getData('text');
@@ -531,17 +555,8 @@ if (!isMotionSupported()) {
   refs.controlsNote.textContent =
     'This device has no motion sensor. Drop a CSV of samples below to analyse a recording.';
 }
-registerServiceWorker();
-
-function registerServiceWorker(): void {
-  if (!('serviceWorker' in navigator)) return;
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').then(
-      () => log.system('Service worker registered — works offline now.', 'ok'),
-      () => log.system('Service worker registration failed.', 'warn'),
-    );
-  });
-}
+// The service worker (offline support) is generated and auto-registered by
+// vite-plugin-pwa — see vite.config.ts. No manual registration here.
 
 // Expose a tiny test hook so the browser dry-run can push synthetic samples
 // (the automation cannot shake a real phone). Guarded and side-effect-free.

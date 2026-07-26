@@ -30,6 +30,7 @@ export interface AppRefs {
   // Drop zone
   dropZone: HTMLElement;
   fileInput: HTMLInputElement;
+  sampleBtn: HTMLButtonElement;
   // Results
   results: HTMLElement;
   resultHarmonics: HTMLElement;
@@ -120,6 +121,7 @@ export function renderApp(root: HTMLElement): AppRefs {
           <div class="dz-text">
             <strong>No motion sensor? Drop a CSV of samples.</strong>
             <span>Columns like <code>t, x, y, z</code>. Works on a desktop, or with a recording from another app.</span>
+            <button type="button" class="sample-link" id="sample-btn">${ICON.activity}<span>Try a sample recording</span></button>
           </div>
           <input type="file" id="file-input" accept=".csv,text/csv,text/plain" hidden />
         </div>
@@ -171,6 +173,7 @@ export function renderApp(root: HTMLElement): AppRefs {
     controlsNote: $('controls-note'),
     dropZone: $('dropzone'),
     fileInput: $<HTMLInputElement>('file-input'),
+    sampleBtn: $<HTMLButtonElement>('sample-btn'),
     results: $('results'),
     resultHarmonics: $('result-harmonics'),
     downloadPngBtn: $<HTMLButtonElement>('dl-png'),
